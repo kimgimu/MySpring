@@ -18,11 +18,11 @@
         , notice_yn
         , delete_yn
         , created_date
-        , modified_Date
+        , modified_date
     </sql>
 
     <!--게시글 저장-->
-    <insert id="save" parameterType="com.kimu.crudboard.domain.post.PostRequest">
+    <insert id="save" parameterType="com.kimu.crudboard.domain.post.PostRequest" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO tb_post (
             <include refid="postColumns"/>
         ) VALUES (
@@ -66,6 +66,18 @@
             tb_post
         WHERE
             delete_yn = 0
+        ORDER BY
+            id DESC
+    </select>
+
+    <!--게시글 상세조회-->
+    <select id="findById" parameterType="long" resultType="com.kimu.crudboard.domain.post.PostResponse">
+        SELECT
+            <include refid="postColumns"/>
+        FROM
+            tb_post
+        WHERE
+            id = #{value}
         ORDER BY
             id DESC
     </select>
